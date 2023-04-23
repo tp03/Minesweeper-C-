@@ -1,0 +1,3 @@
+
+
+//definicje metod i atrybutów
