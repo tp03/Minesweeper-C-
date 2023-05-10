@@ -5,7 +5,7 @@
 Board::Board(int width, int height, int numMines)
     : width(width), height(height), numMines(numMines)
 {
-    cells.resize(width, std::vector<Cell*>(width));
+    cells.resize(width, std::vector<Cell*>(height));
 
     initializeBoard();
 
@@ -29,7 +29,7 @@ void Board::placeMines()
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<int> distX(0, width - 1);
-    std::uniform_int_distribution<int> distY(0, width - 1);
+    std::uniform_int_distribution<int> distY(0, height - 1);
 
     int minesLeft = numMines;
     while (minesLeft > 0) {
@@ -37,8 +37,8 @@ void Board::placeMines()
         int x = distX(gen);
         int y = distY(gen);
 
-        if (!cells[x][y]->isMine()) { // Tomek musi dodaæ isMine do cell klasy
-            cells[x][y]->setMine(true); // Tomek musi dodaæ setMine do cell klasy
+        if (!cells[x][y]->isMine()) { // Tomek musi dodaï¿½ isMine do cell klasy
+            cells[x][y]->setMine(true); // Tomek musi dodaï¿½ setMine do cell klasy
             minesLeft--;
         }
     }
@@ -62,7 +62,7 @@ void Board::calculateAdjacentMines()
                     }
                 }
 
-                cells[x][y]->setAdjacentMines(numAdjacentMines); // Tomek musi dodaæ setAdjacentMines oraz getAdjacentMines
+                cells[x][y]->setAdjacentMines(numAdjacentMines); // Tomek musi dodaï¿½ setAdjacentMines oraz getAdjacentMines
             }
         }
     }

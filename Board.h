@@ -4,6 +4,7 @@
 
 class Board {
 private:
+    Board(int width, int height, int numMines);
     void initializeBoard();
     void placeMines();
     void calculateAdjacentMines();
