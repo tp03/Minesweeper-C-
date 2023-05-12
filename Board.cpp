@@ -11,6 +11,21 @@ Board::Board(int width, int height, int numMines)
 
 }
 
+int Board::getWidth()
+{
+    return width;
+}
+
+int Board::getHeight()
+{
+    return height;
+}
+
+int Board::getNumMines()
+{
+    return numMines();
+}
+
 void Board::initializeBoard()
 {
     for (int x = 0; x < width; x++) {

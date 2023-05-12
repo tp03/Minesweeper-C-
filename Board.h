@@ -3,8 +3,14 @@
 #include "Cell.h"
 
 class Board {
-private:
+public:
     Board(int width, int height, int numMines);
+    
+    int getWidth();
+    int getHeight();
+    int getNumMines();
+    
+private:
     void initializeBoard();
     void placeMines();
     void calculateAdjacentMines();
