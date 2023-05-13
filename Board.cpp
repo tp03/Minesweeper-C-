@@ -30,7 +30,7 @@ void Board::initializeBoard()
 {
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
-            cells[x][y] = new Cell(x, y);
+            cells[x][y] = new Closed(x, y);
         }
     }
 
