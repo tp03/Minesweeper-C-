@@ -1,4 +1,5 @@
 #pragma once
+#include <..\sfml\include\SFML\Graphics.hpp>
 
 class Cell
 {
@@ -17,14 +18,12 @@ public:
 	{
 		x_coordinate = x;
 		y_coordinate = y;
-		has_mine = false;
-		has_flag = false;
-		open = false;
+
 	}
 
-	bool IsMine() const;
-	bool IsFlag() const;
-	bool IsOpen() const;
+	bool isMine() const;
+	bool isFlag() const;
+	bool isOpen() const;
 	int getAdjacentMines() const;
 	int getX() const;
 	int getY() const;
@@ -32,6 +31,7 @@ public:
 	void setFlag(bool boolean);
 	void setOpen(bool boolean);
 	void setAdjacentMines(int mine_count);
+	virtual sf::Sprite reveal() = 0;
 
 };
 
@@ -42,16 +42,23 @@ private:
 
 	int x_coordinate;
 	int y_coordinate;
-	int adjacent_mines;
-	bool has_mine = true;
-	bool has_flag = false;
-	bool open = true;
+	sf::Texture* mine_texture;
+	sf::Sprite mine_sprite;
+	bool has_mine;
+	bool has_flag;
+	bool open;
 
 public:
 
 	Mine(int x, int y)
 		: Cell(x, y)
-	{}
+	{
+		has_mine = true;
+		has_flag = false;
+		open = true;
+	}
+
+	sf::Sprite reveal() override;
 };
 
 
@@ -61,16 +68,23 @@ private:
 
 	int x_coordinate;
 	int y_coordinate;
+	sf::Texture* flag_texture;
+	sf::Sprite flag_sprite;
 	int adjacent_mines;
-	bool has_mine = false;
-	bool has_flag = true;
-	bool open = true;
+	bool has_mine;
+	bool has_flag;
+	bool open;
 
 public:
 
-	Flag(int x, int y, int adjacent_mines)
-		: Cell(x, y), adjacent_mines(adjacent_mines)
-	{}
+	Flag(int x, int y, int adjacent_mines, bool mine)
+		: Cell(x, y), adjacent_mines(adjacent_mines), has_mine(mine)
+	{
+		has_flag = true;
+		open = true;
+	}
+
+	sf::Sprite reveal() override;
 
 };
 
@@ -82,15 +96,23 @@ private:
 	int x_coordinate;
 	int y_coordinate;
 	int adjacent_mines;
-	bool has_mine = false;
-	bool has_flag = false;
-	bool open = true;
+	sf::Texture* numbered_texture;
+	sf::Sprite numbered_sprite;
+	bool has_mine;
+	bool has_flag;
+	bool open ;
 
 public:
 
 	Numbered(int x, int y, int adjacent_mines)
 		: Cell(x, y), adjacent_mines(adjacent_mines)
-	{}
+	{
+		has_mine = false;
+		has_flag = false;
+		open = true;
+	}
+
+	sf::Sprite reveal() override;
 
 };
 
@@ -101,14 +123,21 @@ private:
 	int x_coordinate;
 	int y_coordinate;
 	int adjacent_mines;
-	bool has_mine = false;
-	bool has_flag = false;
-	bool open = false;
+	sf::Texture* closed_texture;
+	sf::Sprite closed_sprite;
+	bool has_mine;
+	bool has_flag;
+	bool open;
 
 public:
 
 	Closed(int x, int y)
 		: Cell(x, y)
-	{}
+	{
+		has_mine = false;
+		has_flag = false;
+		open = false;
+	}
 
+	sf::Sprite reveal() override;
 };
