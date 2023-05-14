@@ -50,6 +50,63 @@ bool Board::isCellMine(int x, int y)
     return cells[x][y]->IsMine();
 }
 
+void Board::openCell(int x, int y) // Odkrywanie min
+{
+    if (!isCellOpen(x, y)) {
+
+        cells[x][y]->setOpen(true);
+
+
+        if (cells[x][y]->IsMine()) {
+            // Tutaj koniec gry
+        }
+        else if (getAdjacentMines(x, y) == 0) {
+            
+            for (int dx = -1; dx <= 1; dx++) {
+                for (int dy = -1; dy <= 1; dy++) {
+                    int nx = x + dx;
+                    int ny = y + dy;
+                    if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                        openCell(nx, ny);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+void Board::flagCell(int x, int y)
+{
+    if (!isCellOpen(x, y)) {
+        cells[x][y]->setFlag(true);
+    }
+}
+
+void Board::unflagCell(int x, int y)
+{
+    if (!isCellOpen(x, y)) {
+        cells[x][y]->setFlag(false);
+    }
+}
+
+int Board::getAdjacentMines(int x, int y)
+{
+    int count = 0;
+    for (int dx = -1; dx <= 1; dx++) {
+        for (int dy = -1; dy <= 1; dy++) {
+            int nx = x + dx;
+            int ny = y + dy;
+            if (nx >= 0 && nx < width_ && ny >= 0 && ny < height_) {
+                if (cells_[nx][ny]->IsMine()) {
+                    count++;
+                }
+            }
+        }
+    }
+    return count;
+}
+
 void Board::initializeBoard()
 {
     for (int x = 0; x < width; x++) {

@@ -14,6 +14,12 @@ public:
     bool isCellOpen(int x, int y);
     bool isCellFlag(int x, int y);
     bool isCellMine(int x, int y);
+
+    void openCell(int x, int y);
+    void flagCell(int x, int y);
+    void unflagCell(int x, int y);
+
+    int getAdjacentMines(int x, int y);
 private:
     void initializeBoard();
     void placeMines();
