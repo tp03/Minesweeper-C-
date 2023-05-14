@@ -11,6 +11,15 @@ Board::Board(int width, int height, int numMines)
 
 }
 
+Board::~Board()
+{
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            delete cells[x][y];
+        }
+    }
+}
+
 int Board::getWidth()
 {
     return width;
@@ -24,6 +33,21 @@ int Board::getHeight()
 int Board::getNumMines()
 {
     return numMines();
+}
+
+bool Board::isCellOpen(int x, int y)
+{
+    return cells[x][y]->IsOpen();
+}
+
+bool Board::isCellFlag(int x, int y)
+{
+    return cells[x][y]->IsFlag();
+}
+
+bool Board::isCellMine(int x, int y)
+{
+    return cells[x][y]->IsMine();
 }
 
 void Board::initializeBoard()
@@ -52,8 +76,8 @@ void Board::placeMines()
         int x = distX(gen);
         int y = distY(gen);
 
-        if (!cells[x][y]->isMine()) { // Tomek musi doda� isMine do cell klasy
-            cells[x][y]->setMine(true); // Tomek musi doda� setMine do cell klasy
+        if (!cells[x][y]->IsMine()) {
+            cells[x][y]->setMine(true);
             minesLeft--;
         }
     }
@@ -63,7 +87,7 @@ void Board::calculateAdjacentMines()
 {
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
-            if (!cells[x][y]->isMine()) {
+            if (!cells[x][y]->IsMine()) {
 
 
                 int numAdjacentMines = 0;
@@ -71,13 +95,13 @@ void Board::calculateAdjacentMines()
                     for (int dy = -1; dy <= 1; dy++) {
                         int nx = x + dx;
                         int ny = y + dy;
-                        if (nx >= 0 && nx < width && ny >= 0 && ny < height && cells[nx][ny]->isMine()) {
+                        if (nx >= 0 && nx < width && ny >= 0 && ny < height && cells[nx][ny]->IsMine()) {
                             numAdjacentMines++;
                         }
                     }
                 }
 
-                cells[x][y]->setAdjacentMines(numAdjacentMines); // Tomek musi doda� setAdjacentMines oraz getAdjacentMines
+                cells[x][y]->setAdjacentMines(numAdjacentMines);
             }
         }
     }
