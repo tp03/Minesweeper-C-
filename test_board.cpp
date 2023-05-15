@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "board.h"
+#include "Board.h"
 #include <stdexcept>
 #include <cassert>
 
