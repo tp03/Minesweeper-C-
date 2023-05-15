@@ -32,22 +32,22 @@ int Board::getHeight()
 
 int Board::getNumMines()
 {
-    return numMines();
+    return numMines;
 }
 
 bool Board::isCellOpen(int x, int y)
 {
-    return cells[x][y]->IsOpen();
+    return cells[x][y]->isOpen();
 }
 
 bool Board::isCellFlag(int x, int y)
 {
-    return cells[x][y]->IsFlag();
+    return cells[x][y]->isFlag();
 }
 
 bool Board::isCellMine(int x, int y)
 {
-    return cells[x][y]->IsMine();
+    return cells[x][y]->isMine();
 }
 
 void Board::openCell(int x, int y) // Odkrywanie min
@@ -57,11 +57,11 @@ void Board::openCell(int x, int y) // Odkrywanie min
         cells[x][y]->setOpen(true);
 
 
-        if (cells[x][y]->IsMine()) {
+        if (cells[x][y]->isMine()) {
             // Tutaj koniec gry
         }
         else if (getAdjacentMines(x, y) == 0) {
-            
+
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dy = -1; dy <= 1; dy++) {
                     int nx = x + dx;
@@ -97,8 +97,8 @@ int Board::getAdjacentMines(int x, int y)
         for (int dy = -1; dy <= 1; dy++) {
             int nx = x + dx;
             int ny = y + dy;
-            if (nx >= 0 && nx < width_ && ny >= 0 && ny < height_) {
-                if (cells_[nx][ny]->IsMine()) {
+            if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                if (cells[nx][ny]->isMine()) {
                     count++;
                 }
             }
@@ -133,7 +133,7 @@ void Board::placeMines()
         int x = distX(gen);
         int y = distY(gen);
 
-        if (!cells[x][y]->IsMine()) {
+        if (!cells[x][y]->isMine()) {
             cells[x][y]->setMine(true);
             minesLeft--;
         }
@@ -144,7 +144,7 @@ void Board::calculateAdjacentMines()
 {
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++) {
-            if (!cells[x][y]->IsMine()) {
+            if (!cells[x][y]->isMine()) {
 
 
                 int numAdjacentMines = 0;
@@ -152,7 +152,7 @@ void Board::calculateAdjacentMines()
                     for (int dy = -1; dy <= 1; dy++) {
                         int nx = x + dx;
                         int ny = y + dy;
-                        if (nx >= 0 && nx < width && ny >= 0 && ny < height && cells[nx][ny]->IsMine()) {
+                        if (nx >= 0 && nx < width && ny >= 0 && ny < height && cells[nx][ny]->isMine()) {
                             numAdjacentMines++;
                         }
                     }

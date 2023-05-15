@@ -10,7 +10,7 @@ public:
     int getWidth();
     int getHeight();
     int getNumMines();
-    
+
     bool isCellOpen(int x, int y);
     bool isCellFlag(int x, int y);
     bool isCellMine(int x, int y);
