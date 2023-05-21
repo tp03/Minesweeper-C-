@@ -4,12 +4,13 @@
 
 class Board {
 public:
-    Board(int width, int height, int numMines);
+    Board(int width = 0, int height = 0, int numMines = 0);
     ~Board();
 
     int getWidth();
     int getHeight();
     int getNumMines();
+    std::vector<std::vector<Cell*>> getBoard();
 
     bool isCellOpen(int x, int y);
     bool isCellFlag(int x, int y);

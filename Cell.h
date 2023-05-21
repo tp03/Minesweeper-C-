@@ -1,5 +1,5 @@
 #pragma once
-#include <..\sfml\include\SFML\Graphics.hpp>
+#include <..\SFML\Graphics.hpp>
 
 class Cell
 {
@@ -53,9 +53,9 @@ public:
 	Mine(int x, int y)
 		: Cell(x, y)
 	{
-		has_mine = true;
-		has_flag = false;
-		open = true;
+		setMine(true);
+		setFlag(false);
+		setOpen(true);
 	}
 
 	sf::Sprite reveal() override;
@@ -78,10 +78,12 @@ private:
 public:
 
 	Flag(int x, int y, int adjacent_mines, bool mine)
-		: Cell(x, y), adjacent_mines(adjacent_mines), has_mine(mine)
+		: Cell(x, y)
 	{
-		has_flag = true;
-		open = true;
+		setAdjacentMines(adjacent_mines);
+		setMine(mine);
+		setFlag(true);
+		setOpen(true);
 	}
 
 	sf::Sprite reveal() override;
@@ -100,16 +102,17 @@ private:
 	sf::Sprite numbered_sprite;
 	bool has_mine;
 	bool has_flag;
-	bool open ;
+	bool open;
 
 public:
 
 	Numbered(int x, int y, int adjacent_mines)
-		: Cell(x, y), adjacent_mines(adjacent_mines)
+		: Cell(x, y)
 	{
-		has_mine = false;
-		has_flag = false;
-		open = true;
+		setAdjacentMines(adjacent_mines);
+		setMine(false);
+		setFlag(false);
+		setOpen(true);
 	}
 
 	sf::Sprite reveal() override;
@@ -134,9 +137,9 @@ public:
 	Closed(int x, int y)
 		: Cell(x, y)
 	{
-		has_mine = false;
-		has_flag = false;
-		open = false;
+		setMine(false);
+		setFlag(false);
+		setOpen(false);
 	}
 
 	sf::Sprite reveal() override;

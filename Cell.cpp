@@ -1,5 +1,6 @@
 #include "Cell.h"
 #include <iostream>
+#include <..\SFML\Graphics.hpp>
 
 
 bool Cell::isMine() const
@@ -86,42 +87,42 @@ sf::Sprite Numbered::reveal()
 {
 
 	numbered_texture = new sf::Texture;
-	if (adjacent_mines == 0)
+	if (getAdjacentMines() == 0)
 	{
 		numbered_texture->loadFromFile("0.png");
 	}
 
-	else if (adjacent_mines == 1)
+	else if (getAdjacentMines() == 1)
 	{
 		numbered_texture->loadFromFile("1.png");
 	}
 
-	else if (adjacent_mines == 2)
+	else if (getAdjacentMines() == 2)
 	{
 		numbered_texture->loadFromFile("2.png");
 	}
 
-	else if (adjacent_mines == 3)
+	else if (getAdjacentMines() == 3)
 	{
 		numbered_texture->loadFromFile("3.png");
 	}
 
-	else if (adjacent_mines == 4)
+	else if (getAdjacentMines() == 4)
 	{
 		numbered_texture->loadFromFile("4.png");
 	}
 
-	else if (adjacent_mines == 5)
+	else if (getAdjacentMines() == 5)
 	{
 		numbered_texture->loadFromFile("5.png");
 	}
 
-	else if (adjacent_mines == 6)
+	else if (getAdjacentMines() == 6)
 	{
 		numbered_texture->loadFromFile("6.png");
 	}
 
-	else if (adjacent_mines == 7)
+	else if (getAdjacentMines() == 7)
 	{
 		numbered_texture->loadFromFile("7.png");
 	}
@@ -151,3 +152,4 @@ sf::Sprite Closed::reveal()
 
 	return sprite;
 }
+
