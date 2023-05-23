@@ -20,6 +20,7 @@ public:
     void flagCell(int x, int y);
     void unflagCell(int x, int y);
 
+    void rightClicked(sf::Vector2i mousePosition);
     int getAdjacentMines(int x, int y);
 private:
     void initializeBoard();

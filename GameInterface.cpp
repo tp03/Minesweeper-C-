@@ -2,9 +2,14 @@
 #include "Board.h"
 
 
-int GameInterface::getDifficultyLevel() const {
+void GameInterface::setPlaying(bool b) {
 
-	return difficulty_level;
+	still_playing = b;
+}
+
+bool GameInterface::getPlaying() const {
+
+	return still_playing;
 }
 
 void GameInterface::showBoard(Board board) const {
@@ -13,26 +18,8 @@ void GameInterface::showBoard(Board board) const {
 	int height = board.getHeight();
 	std::vector<std::vector<Cell*>> vectors = board.getBoard();
 
-	int pixels_x;
-	int pixels_y;
-
-	if (getDifficultyLevel() == 0)
-	{
-		pixels_x = 800;
-		pixels_y = 800;
-	}
-
-	else if (getDifficultyLevel() == 1)
-	{
-		pixels_x = 1600;
-		pixels_y = 1600;
-	}
-
-	else
-	{
-		pixels_x = 1600;
-		pixels_y = 3000;
-	}
+	int pixels_x = 100 * width;
+	int pixels_y = 100 * height;
 
 	sf::RenderWindow window(sf::VideoMode(pixels_x, pixels_y), "Minesweeper");
 
@@ -40,17 +27,25 @@ void GameInterface::showBoard(Board board) const {
 
 	while (window.isOpen()) {
 		sf::Event evnt;
+		sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 		while (window.pollEvent(evnt))
 		{
 			if (evnt.type == evnt.Closed())
 			{
 				window.close();
 			}
+			else if (evnt.type == sf::Event::MouseButtonPressed)
+			{
+				if (evnt.mouseButton.button == sf::Mouse::Right)
+				{
+					board.rightClicked(mousePosition);
+				}
+			}
 		}
-		window.clear();
+		window.clear(sf::Color::White);
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				window.draw(vectors[x][y]->reveal());
+				window.draw(board.getBoard()[x][y]->reveal());
 			}
 		}
 		window.display();

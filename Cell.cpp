@@ -153,3 +153,18 @@ sf::Sprite Closed::reveal()
 	return sprite;
 }
 
+bool Cell::isSpriteClicked(sf::Vector2i mousePosition)
+{
+
+	sf::Sprite spr = reveal();
+	sf::FloatRect sprite_bounds = spr.getGlobalBounds();
+
+	if (sprite_bounds.contains(mousePosition.x, mousePosition.y))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

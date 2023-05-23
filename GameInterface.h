@@ -5,13 +5,14 @@
 class GameInterface
 {
 private:
-	int difficulty_level;
+	bool still_playing;
 public:
-	GameInterface(int difficulty = 0)
+	GameInterface()
 	{
-		difficulty_level = difficulty;
+		still_playing = true;
 	}
 
-	int getDifficultyLevel() const;
 	void showBoard(Board board) const;
+	bool getPlaying() const;
+	void setPlaying(bool b);
 };

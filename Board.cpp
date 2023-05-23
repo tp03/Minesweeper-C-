@@ -163,3 +163,33 @@ void Board::calculateAdjacentMines()
         }
     }
 }
+
+void Board::rightClicked(sf::Vector2i mousePosition)
+{
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++)
+        {
+
+            if (cells[x][y]->isSpriteClicked(mousePosition))
+            {
+                if (isCellFlag(x, y))
+                {
+                    if (isCellMine(x, y))
+                    {
+                        cells[x][y] = new Mine(x, y);
+                    }
+
+                    else
+                    {
+                        cells[x][y] = new Numbered(x, y, cells[x][y]->getAdjacentMines());
+                    }
+                }
+                else
+                {
+                    cells[x][y] = new Flag(x, y, cells[x][y]->getAdjacentMines(), cells[x][y]->isMine());
+                }
+            }
+        }
+
+    }
+}

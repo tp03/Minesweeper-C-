@@ -30,6 +30,7 @@ public:
 	void setMine(bool boolean);
 	void setFlag(bool boolean);
 	void setOpen(bool boolean);
+	bool isSpriteClicked(sf::Vector2i mousePosition);
 	void setAdjacentMines(int mine_count);
 	virtual sf::Sprite reveal() = 0;
 
