@@ -114,10 +114,10 @@ void Board::saveBoard(const Player& player)
     for (int x = 0; x < getWidth(); ++x) {
         for (int y = 0; y < getHeight(); ++y) {
             bool isCellOpen = isCellOpen(x, y);
-            bool isCellFlagged = isCellFlag(x, y);
+            bool isCellFlag = isCellFlag(x, y);
             bool isCellMine = isCellMine(x, y);
 
-            outputFile << x << " " << y << " " << isCellOpen << " " << isCellFlagged << " " << isCellMine << "\n";
+            outputFile << x << " " << y << " " << isCellOpen << " " << isCellFlag << " " << isCellMine << "\n";
         }
     }
 
