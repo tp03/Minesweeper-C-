@@ -28,6 +28,63 @@ Menu::Menu(int w, int h, sf::RenderWindow* win)
 	buttons[2].setString("Exit");
 }
 
+void Menu::drawMenu()
+{
+	window->clear();
+	for (int i = 0; i < BUTTONS_NUMBER; ++i)
+	{
+		window->draw(buttons[i]);
+	}
+	window->display();
+}
+
+void Menu::upKeyAction()
+{
+	if (selectedButtonIndex - 1 >= 0)
+	{
+		unhighlightButton();
+		selectedButtonIndex--;
+		highlightButton();
+	}
+}
+
+void Menu::downKeyAction()
+{
+	if (selectedButtonIndex + 1 < BUTTONS_NUMBER)
+	{
+		unhighlightButton();
+		selectedButtonIndex++;
+		highlightButton();
+	}
+}
+
+void Menu::enterKeyAction()
+{
+	switch (selectedButtonIndex)
+	{
+	case 0:
+		playButtonAction();
+		break;
+
+	case 1:
+		rankingButtonAction();
+		break;
+
+	case 2:
+		window->close();
+	}
+}
+
+void Menu::playButtonAction()
+{
+	std::cout << "Play button has been pressed" << std::endl;
+}
+
+void Menu::rankingButtonAction()
+{
+	std::cout << "Ranking button has been pressed" << std::endl;
+}
+
 void Menu::highlightButton()
 {
 	y_pos = y_pos_unit * (BUTTONS_NUMBER + selectedButtonIndex) - (1.5 * font_size);
