@@ -35,6 +35,11 @@ int Board::getNumMines()
     return numMines;
 }
 
+std::vector<std::vector<Cell*>> Board::getBoard()
+{
+    return cells;
+}
+
 bool Board::isCellOpen(int x, int y)
 {
     return cells[x][y]->isOpen();
@@ -67,7 +72,9 @@ void Board::openCell(int x, int y) // Odkrywanie min
                     int nx = x + dx;
                     int ny = y + dy;
                     if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-                        openCell(nx, ny);
+                        if (!isCellFlag(nx, ny)) {
+                            openCell(nx, ny);
+                        }
                     }
                 }
             }
@@ -165,6 +172,24 @@ void Board::initializeBoard()
     calculateAdjacentMines();
 }
 
+int Board::flagsLeft()
+{
+    int count = numMines;
+
+    for (int x = 0; x < width; x++)
+    {
+        for (int y = 0; y < height; y++)
+        {
+            if (isCellFlag(x, y))
+            {
+                count--;
+            }
+        }
+    }
+
+    return count;
+}
+
 void Board::placeMines()
 {
     // Losowo stwarzam miny
@@ -210,32 +235,81 @@ void Board::calculateAdjacentMines()
     }
 }
 
-void Board::rightClicked(sf::Vector2i mousePosition)
+void Board::rightClicked(sf::Vector2i mouse_position)
 {
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++)
         {
 
-            if (cells[x][y]->isSpriteClicked(mousePosition))
+            if (cells[x][y]->isSpriteClicked(mouse_position))
             {
                 if (isCellFlag(x, y))
                 {
-                    if (isCellMine(x, y))
-                    {
-                        cells[x][y] = new Mine(x, y);
-                    }
-
-                    else
-                    {
-                        cells[x][y] = new Numbered(x, y, cells[x][y]->getAdjacentMines());
-                    }
+                    int am = cells[x][y]->getAdjacentMines();
+                    int m = cells[x][y]->isMine();
+                    cells[x][y] = new Closed(x, y);
+                    cells[x][y]->setAdjacentMines(am);
+                    cells[x][y]->setMine(m);
                 }
-                else
+                else if (!isCellOpen(x, y))
                 {
                     cells[x][y] = new Flag(x, y, cells[x][y]->getAdjacentMines(), cells[x][y]->isMine());
                 }
             }
         }
-
     }
 }
+
+void Board::leftClicked(sf::Vector2i mouse_position)
+{
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++)
+        {
+
+            if (cells[x][y]->isSpriteClicked(mouse_position))
+            {
+                if (!isCellFlag(x, y) && !isCellOpen(x, y))
+                {
+
+                    if (isCellMine(x, y))
+                    {
+                        for (int x = 0; x < width; x++)
+                        {
+                            for (int y = 0; y < height; y++)
+                            {
+                                if (isCellMine(x, y))
+                                {
+                                    cells[x][y] = new Mine(x, y);
+                                }
+                                else
+                                {
+                                    cells[x][y] = new Numbered(x, y, cells[x][y]->getAdjacentMines());
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        openCell(x, y);
+                        for (int x = 0; x < width; x++)
+                        {
+                            for (int y = 0; y < height; y++)
+                            {
+                                if (isCellOpen(x, y))
+                                {
+                                    cells[x][y] = new Numbered(x, y, cells[x][y]->getAdjacentMines());
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+
+            }
+
+
+        }
+
+
+    }

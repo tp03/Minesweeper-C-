@@ -1,5 +1,4 @@
 #include "Cell.h"
-#include <iostream>
 #include <..\SFML\Graphics.hpp>
 
 
@@ -54,36 +53,42 @@ void Cell::setAdjacentMines(int mine_count)
 	adjacent_mines = mine_count;
 }
 
-sf::Sprite Mine::reveal()
+void Mine::setSprite()
 {
 
 	mine_texture = new sf::Texture;
 	mine_texture->loadFromFile("mine.png");
 	mine_sprite.setTexture(*mine_texture);
-	sf::Sprite sprite = mine_sprite;
 	int x = 100 * getX();
 	int y = 100 * getY();
-	sprite.setPosition(x, y);
+	mine_sprite.setPosition(x, y);
+}
 
-	return sprite;
+sf::Sprite Mine::reveal()
+{
+
+	return mine_sprite;
 
 }
 
-sf::Sprite Flag::reveal()
+void Flag::setSprite()
 {
 
 	flag_texture = new sf::Texture;
 	flag_texture->loadFromFile("flag.png");
 	flag_sprite.setTexture(*flag_texture);
-	sf::Sprite sprite = flag_sprite;
 	int x = 100 * getX();
 	int y = 100 * getY();
-	sprite.setPosition(x, y);
-
-	return sprite;
+	flag_sprite.setPosition(x, y);
 }
 
-sf::Sprite Numbered::reveal()
+sf::Sprite Flag::reveal()
+{
+
+	return flag_sprite;
+}
+
+void Numbered::setSprite()
 {
 
 	numbered_texture = new sf::Texture;
@@ -131,26 +136,32 @@ sf::Sprite Numbered::reveal()
 		numbered_texture->loadFromFile("8.png");
 	}
 	numbered_sprite.setTexture(*numbered_texture);
-	sf::Sprite sprite = numbered_sprite;
 	int x = 100 * getX();
 	int y = 100 * getY();
-	sprite.setPosition(x, y);
-
-	return sprite;
+	numbered_sprite.setPosition(x, y);
 }
 
-sf::Sprite Closed::reveal()
+sf::Sprite Numbered::reveal()
+{
+
+	return numbered_sprite;
+
+}
+
+void Closed::setSprite()
 {
 
 	closed_texture = new sf::Texture;
 	closed_texture->loadFromFile("closed.png");
 	closed_sprite.setTexture(*closed_texture);
-	sf::Sprite sprite = closed_sprite;
 	int x = 100 * getX();
 	int y = 100 * getY();
-	sprite.setPosition(x, y);
+	closed_sprite.setPosition(x, y);
+}
 
-	return sprite;
+sf::Sprite Closed::reveal()
+{
+	return closed_sprite;
 }
 
 bool Cell::isSpriteClicked(sf::Vector2i mousePosition)
