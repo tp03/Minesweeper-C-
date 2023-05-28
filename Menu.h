@@ -28,4 +28,5 @@ public:
 	Menu(int width, int height, sf::RenderWindow* window);
 
 	int getSelectedButtonIndex();
+	void run();
 };

@@ -102,3 +102,36 @@ void Menu::unhighlightButton()
 	buttons[selectedButtonIndex].setCharacterSize(font_size);
 	buttons[selectedButtonIndex].setPosition(sf::Vector2f(x_pos, y_pos));
 }
+
+int Menu::getSelectedButtonIndex()
+{
+	return selectedButtonIndex;
+}
+
+void Menu::run()
+{
+	sf::Event event;
+
+	while (window->pollEvent(event))
+	{
+		if (event.type == sf::Event::KeyReleased)
+		{
+			switch (event.key.code)
+			{
+			case sf::Keyboard::Up:
+				upKeyAction();
+				break;
+
+			case sf::Keyboard::Down:
+				downKeyAction();
+				break;
+
+			case sf::Keyboard::Enter:
+				enterKeyAction();
+				break;
+			}
+		}
+	}
+
+	drawMenu();
+}
