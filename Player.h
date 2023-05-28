@@ -9,6 +9,7 @@ public:
     int getScore() const;
     void increaseScore(int amount);
     void resetScore();
+    void setScore(int amount);
 
 private:
     std::string name_;

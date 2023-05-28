@@ -17,3 +17,7 @@ void Player::increaseScore(int amount) {
 void Player::resetScore() {
     score_ = 0;
 }
+
+void Player::setScore(int amount) {
+    score_ = amount;
+}

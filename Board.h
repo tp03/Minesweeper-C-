@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Cell.h"
+#include "Player.h"
 
 class Board {
 public:
@@ -22,6 +23,9 @@ public:
 
     void rightClicked(sf::Vector2i mousePosition);
     int getAdjacentMines(int x, int y);
+
+    void saveBoard(const Player& player);//to musi być przypisane do przycisku w menu
+    void loadBoard(const Player& player);//to musi być przypisane do przycisku w menu
 private:
     void initializeBoard();
     void placeMines();

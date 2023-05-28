@@ -107,6 +107,52 @@ int Board::getAdjacentMines(int x, int y)
     return count;
 }
 
+void Board::saveBoard(const Player& player)
+{
+    std::ofstream outputFile(player.getName() + ".txt");
+
+    for (int x = 0; x < getWidth(); ++x) {
+        for (int y = 0; y < getHeight(); ++y) {
+            bool isCellOpen = isCellOpen(x, y);
+            bool isCellFlagged = isCellFlag(x, y);
+            bool isCellMine = isCellMine(x, y);
+
+            outputFile << x << " " << y << " " << isCellOpen << " " << isCellFlagged << " " << isCellMine << "\n";
+        }
+    }
+
+    outputFile << player.getScore() << "\n";
+
+    outputFile.close();
+}
+
+void Board::loadBoard(const Player& player)
+{
+    std::ifstream inputFile(player.getName() + ".txt");
+
+    int x, y, isCellOpen, isCellFlag, isCellMine;
+    while (inputFile >> x >> y >> isCellOpen >> isCellFlag >> isCellMine) {
+        cells[x][y]->setMine(false);
+        if (isCellOpen)
+        {
+            cells[x][y]->setOpen(true);
+        }
+        else if (isCellFlag)
+        {
+            cells[x][y]->setFlag(true);
+        }
+        else if (isCellMine)
+        {
+            cells[x][y]->setMine(true);
+        }
+    }
+    calculateAdjacentMines();
+    int playerScore;
+    inputFile >> playerScore;
+    player.setScore(playerScore);
+    inputFile.close();
+}
+
 void Board::initializeBoard()
 {
     for (int x = 0; x < width; x++) {
