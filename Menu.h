@@ -7,7 +7,9 @@
 class Menu
 {
 	int width, height;
+
 	int selectedButtonIndex;
+	int font_size, x_pos, y_pos, y_pos_unit;
 
 	sf::Font font;
 	sf::Text buttons[BUTTONS_NUMBER];
@@ -19,6 +21,8 @@ class Menu
 	void enterKeyAction();
 	void playButtonAction();
 	void rankingButtonAction();
+	void highlightButton();
+	void unhighlightButton();
 
 public:
 	Menu(int width, int height, sf::RenderWindow* window);
