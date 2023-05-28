@@ -1,4 +1,6 @@
 #include <string>
+#include <fstream>
+#include <iostream>
 
 class Player {
 public:
@@ -10,6 +12,7 @@ public:
     void increaseScore(int amount);
     void resetScore();
     void setScore(int amount);
+    void saveScore(int difficulty);
 
 private:
     std::string name_;
