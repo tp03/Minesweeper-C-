@@ -39,3 +39,51 @@ void Player::saveScore(int difficulty) {
         std::cerr << "Unable to open file: " << fileName << std::endl;
     }
 }
+
+void Player::saveScoreFixed(int difficulty) {
+    using json = nlohmann::json;
+
+    std::string fileName = "scores" + std::to_string(difficulty) + ".txt";
+    std::vector<std::pair<std::string, int>> player_data;
+    std::ifstream inputFile(fileName);
+
+    if (inputFile.good())
+    {
+        try
+        {
+            json data = json::parse(inputFile);
+            inputFile.close();
+
+            for (int i = 0; i < data.size(); ++i)
+            {
+                player_data.push_back({ data[i]["name"], data[i]["score"] });
+            }
+        }
+        catch (const json::parse_error& e)
+        {
+            inputFile.close();
+        }
+    }
+
+    std::ofstream outputFile(fileName, std::ios::out);
+    json allPlayersData;
+
+    if (outputFile.is_open()) {
+        player_data.push_back({getName(), getScore()});
+
+        json playerData;
+        for (int i = 0; i < player_data.size(); i++)
+        {
+            playerData["name"] = player_data[i].first;
+            playerData["score"] = player_data[i].second;
+            allPlayersData.push_back(playerData);
+        }
+
+        outputFile << data.dump(4);
+        outputFile.close();
+        std::cout << "Player result saved to " << fileName << std::endl;
+    }
+    else {
+        std::cerr << "Unable to open file: " << fileName << std::endl;
+    }
+}
