@@ -40,7 +40,7 @@ void Player::saveScore(int difficulty) {
     }
 }
 
-void Player::saveScoreFixed(int difficulty) {
+void Player::fixedSaveScore(int difficulty) {
     using json = nlohmann::json;
 
     std::string fileName = "scores" + std::to_string(difficulty) + ".txt";
@@ -79,7 +79,7 @@ void Player::saveScoreFixed(int difficulty) {
             allPlayersData.push_back(playerData);
         }
 
-        outputFile << data.dump(4);
+        outputFile << allPlayersData.dump(4);
         outputFile.close();
         std::cout << "Player result saved to " << fileName << std::endl;
     }
