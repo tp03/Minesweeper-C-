@@ -28,6 +28,14 @@ Menu::Menu(int w, int h, sf::RenderWindow* win)
 	buttons[2].setString("Exit");
 }
 
+Menu::~Menu()
+{
+	for (int i = 0; i < rankings.size(); ++i)
+	{
+		delete rankings[i];
+	}
+}
+
 void Menu::drawMenu()
 {
 	window->clear();
@@ -82,7 +90,27 @@ void Menu::playButtonAction()
 
 void Menu::rankingButtonAction()
 {
-	std::cout << "Ranking button has been pressed" << std::endl;
+	int index = 0;
+	int modes_number = 3;
+
+	for (int i = 0; i < modes_number; ++i)
+	{
+		std::string file_name = "scores" + std::to_string(i) + ".txt";
+		rankings.push_back(new Ranking{ width, height, window, file_name });
+	}
+
+	while (!rankings[index]->escapeClicked())
+	{
+		rankings[index]->run();
+		if (rankings[index]->rightClicked())
+		{
+			index = (index + 1) % modes_number;
+		}
+		else if (rankings[index]->leftClicked())
+		{
+			index = (index + modes_number - 1) % modes_number;
+		}
+	}
 }
 
 void Menu::highlightButton()
