@@ -2,6 +2,8 @@
 #include <vector>
 #include "Cell.h"
 #include "Player.h"
+#include <iostream>
+#include <nlohmann/json.hpp>
 
 class Board {
 public:

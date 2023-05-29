@@ -116,48 +116,86 @@ int Board::getAdjacentMines(int x, int y)
 
 void Board::saveBoard(const Player& player)
 {
-    std::ofstream outputFile(player.getName() + ".txt");
+    std::ofstream outputFile(player.getName() + ".json");
 
-    for (int x = 0; x < getWidth(); ++x) {
-        for (int y = 0; y < getHeight(); ++y) {
-            bool isCellOpen = isCellOpen(x, y);
-            bool isCellFlag = isCellFlag(x, y);
-            bool isCellMine = isCellMine(x, y);
+    if (outputFile.is_open())
+    {
+        nlohmann::json boardData;
 
-            outputFile << x << " " << y << " " << isCellOpen << " " << isCellFlag << " " << isCellMine << "\n";
+        for (int x = 0; x < getWidth(); ++x) {
+            for (int y = 0; y < getHeight(); ++y) {
+                bool isCellOpen = isCellOpen(x, y);
+                bool isCellFlag = isCellFlag(x, y);
+                bool isCellMine = isCellMine(x, y);
+
+                nlohmann::json cellData;
+                cellData["x"] = x;
+                cellData["y"] = y;
+                cellData["isCellOpen"] = isCellOpen;
+                cellData["isCellFlag"] = isCellFlag;
+                cellData["isCellMine"] = isCellMine;
+
+                boardData.push_back(cellData);
+            }
         }
+
+        boardData["playerScore"] = player.getScore();
+
+        outputFile << boardData.dump(4);
+        outputFile.close();
+        std::cout << "Board saved to " << player.getName() + ".json" << std::endl;
     }
-
-    outputFile << player.getScore() << "\n";
-
-    outputFile.close();
+    else
+    {
+        std::cerr << "Unable to open file: " << player.getName() + ".json" << std::endl;
+    }
 }
 
 void Board::loadBoard(const Player& player)
 {
-    std::ifstream inputFile(player.getName() + ".txt");
+    std::ifstream inputFile(player.getName() + ".json");
 
-    int x, y, isCellOpen, isCellFlag, isCellMine;
-    while (inputFile >> x >> y >> isCellOpen >> isCellFlag >> isCellMine) {
-        cells[x][y]->setMine(false);
-        if (isCellOpen)
+    if (inputFile.is_open())
+    {
+        nlohmann::json boardData;
+        inputFile >> boardData;
+
+        for (const auto& cellData : boardData)
         {
-            cells[x][y]->setOpen(true);
+            int x = cellData["x"];
+            int y = cellData["y"];
+            bool isCellOpen = cellData["isCellOpen"];
+            bool isCellFlag = cellData["isCellFlag"];
+            bool isCellMine = cellData["isCellMine"];
+
+            cells[x][y]->setMine(false);
+
+            if (isCellOpen)
+            {
+                cells[x][y]->setOpen(true);
+            }
+            else if (isCellFlag)
+            {
+                cells[x][y]->setFlag(true);
+            }
+            else if (isCellMine)
+            {
+                cells[x][y]->setMine(true);
+            }
         }
-        else if (isCellFlag)
-        {
-            cells[x][y]->setFlag(true);
-        }
-        else if (isCellMine)
-        {
-            cells[x][y]->setMine(true);
-        }
+
+        calculateAdjacentMines();
+
+        int playerScore = boardData["playerScore"];
+        player.setScore(playerScore);
+
+        inputFile.close();
+        std::cout << "Board loaded from " << player.getName() + ".json" << std::endl;
     }
-    calculateAdjacentMines();
-    int playerScore;
-    inputFile >> playerScore;
-    player.setScore(playerScore);
-    inputFile.close();
+    else
+    {
+        std::cerr << "Unable to open file: " << player.getName() + ".json" << std::endl;
+    }
 }
 
 void Board::initializeBoard()
