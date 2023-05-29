@@ -3,11 +3,14 @@
 #include <iostream>
 #include <string>
 #include "Ranking.h"
+#include "Game.h"
+#include "ChooseGameMenu.h"
 
 #define BUTTONS_NUMBER 3
 
 class Menu
 {
+protected:
 	int width, height;
 
 	int selectedButtonIndex;
@@ -16,8 +19,6 @@ class Menu
 	sf::Font font;
 	sf::Text buttons[BUTTONS_NUMBER];
 	sf::RenderWindow* window;
-
-	std::vector <Ranking*> rankings;
 
 	void drawMenu();
 	void upKeyAction();
@@ -30,8 +31,36 @@ class Menu
 
 public:
 	Menu(int width, int height, sf::RenderWindow* window);
-	~Menu();
+	Menu();
 
 	int getSelectedButtonIndex();
+	void run();
+};
+
+
+
+class ChooseGameMenu : public Menu
+{
+	int width, height;
+
+	bool return_pressed;
+
+	sf::Text buttons[BUTTONS_NUMBER];
+	sf::RenderWindow* window;
+
+	void drawMenu();
+	void upKeyAction();
+	void downKeyAction();
+	void enterKeyAction();
+	void newGameButtonAction();
+	void loadSavedGameButtonAction();
+	void returnButtonAction();
+	void highlightButton();
+	void unhighlightButton();
+
+public:
+	ChooseGameMenu(int width, int height, sf::RenderWindow* window);
+
+	bool returnButtonPressed();
 	void run();
 };
