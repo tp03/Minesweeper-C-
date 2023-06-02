@@ -2,18 +2,19 @@
 #include "MenuElement.h"
 
 
-class ChooseGameMenu :
+class ChooseGamemodeMenu :
 	public MenuElement
 {
 	bool return_pressed;
 
 	void enterKeyAction();
-	void newGameButtonAction();
-	void savedGameButtonAction();
+	void easyModeButtonAction();
+	void normalModeButtonAction();
+	void hardModeButtonAction();
 	void returnButtonAction();
 
 public:
-	ChooseGameMenu(int width, int height, sf::RenderWindow* window);
+	ChooseGamemodeMenu(int width, int height, sf::RenderWindow* window);
 
 	bool returnButtonPressed();
 	virtual void run();
