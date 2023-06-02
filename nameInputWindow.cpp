@@ -16,7 +16,6 @@ nameInputWindow::nameInputWindow(int w, int h, sf::RenderWindow* win)
 void nameInputWindow::run()
 {
     sf::Event event;
-    sf::Event event1;
     StartMenu* start_menu;
     start_menu = new StartMenu(width, height, window);
 
