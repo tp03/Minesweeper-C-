@@ -32,7 +32,7 @@ void nameInputWindow::run()
             else {
                 playerName += static_cast<char>(event.text.unicode);
             }
-            playerName.setString(playerName);
+            buttons[0].setString(playerName);
         }
 	}
 	draw();
