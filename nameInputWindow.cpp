@@ -15,25 +15,32 @@ nameInputWindow::nameInputWindow(int w, int h, sf::RenderWindow* win)
 
 void nameInputWindow::run()
 {
-	sf::Event event;
+    sf::Event event;
+    sf::Event event1;
     StartMenu* start_menu;
-	start_menu = new start_menu(width, height, window);
+    start_menu = new StartMenu(width, height, window);
 
-	while (window->pollEvent(event))
-	{
-		if (event.type == sf::Event::TextEntered) {
+    while (window->pollEvent(event))
+    {
+        if (event.type == sf::Event::TextEntered) {
             if (event.text.unicode == '\b' && !playerName.empty()) {
                 playerName.pop_back();
-            }
-            else if (event.text.unicode == '\r' || event.text.unicode == '\n') {
-                window->close();
-                start_menu->run();
             }
             else {
                 playerName += static_cast<char>(event.text.unicode);
             }
             buttons[0].setString(playerName);
         }
-	}
-	draw();
+        if (event.type == sf::Event::KeyReleased)
+        {
+            if (event.key.code == sf::Keyboard::Enter)
+            {
+                while (window->isOpen())
+                {
+                    start_menu->run();
+                }
+            }
+        }
+    }
+    draw();
 }
