@@ -2,7 +2,7 @@
 #include "MenuElement.h"
 #include "MenuChooseGame.h"
 #include "RankingHUD.h"
-#include "MenuRanking.h"
+#include "Ranking.h"
 
 
 class StartMenu :

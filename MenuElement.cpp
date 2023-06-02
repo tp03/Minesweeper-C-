@@ -12,19 +12,19 @@ MenuElement::MenuElement(int w, int h, sf::RenderWindow* win)
 
 void MenuElement::setButtons()
 {
-	for (int i = 0; i < BUTTONS_NUMBER; ++i)
+	for (int i = 0; i < buttons_number; ++i)
 	{
 		selectedButtonIndex = i;
 
 		if (i == 0)
 		{
 			highlightButton();
-			y_pos = y_pos_unit * (BUTTONS_NUMBER + i) - (1.5 * font_size);
+			y_pos = y_pos_unit * (buttons_number + i) - (1.5 * font_size);
 		}
 		else
 		{
 			unhighlightButton();
-			y_pos = y_pos_unit * (BUTTONS_NUMBER + i) - (0.75 * font_size);
+			y_pos = y_pos_unit * (buttons_number + i) - (0.75 * font_size);
 		}
 
 		buttons[i].setFont(font);
@@ -36,7 +36,7 @@ void MenuElement::draw()
 {
 	window->clear();
 
-	for (int i = 0; i < BUTTONS_NUMBER; ++i)
+	for (int i = 0; i < buttons_number; ++i)
 	{
 		window->draw(buttons[i]);
 	}
@@ -76,7 +76,7 @@ void MenuElement::upKeyAction()
 
 void MenuElement::downKeyAction()
 {
-	if (selectedButtonIndex + 1 < BUTTONS_NUMBER)
+	if (selectedButtonIndex + 1 < buttons_number)
 	{
 		unhighlightButton();
 		selectedButtonIndex++;

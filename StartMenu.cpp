@@ -6,7 +6,7 @@ StartMenu::StartMenu(int w, int h, sf::RenderWindow* win)
 {
 	font_size = height / 12;
 	x_pos = width / 10;
-	y_pos_unit = height / (2 * BUTTONS_NUMBER);
+	y_pos_unit = height / (2 * buttons_number);
 
 	setButtons();
 
@@ -53,12 +53,12 @@ void StartMenu::rankingButtonAction()
 	int index = 0;
 	int modes_number = 3;
 
-	std::vector <MenuRanking*> rankings{ 3 };
+	std::vector <Ranking*> rankings{ 3 };
 	std::vector <RankingHUD*> HUDs{ 3 };
 	for (int i = 0; i < modes_number; ++i)
 	{
 		std::string file_name = "scores" + std::to_string(i) + ".txt";
-		rankings[i] = new MenuRanking{ width, height, window, file_name };
+		rankings[i] = new Ranking{ width, height, window, file_name };
 		HUDs[i] = new RankingHUD(width, height, window, file_name);
 	}
 

@@ -6,7 +6,7 @@ ChooseGameMenu::ChooseGameMenu(int w, int h, sf::RenderWindow* win)
 {
 	font_size = height / 18;
 	x_pos = width / 10;
-	y_pos_unit = height / (2 * BUTTONS_NUMBER);
+	y_pos_unit = height / (2 * buttons_number);
 
 	setButtons();
 
@@ -37,7 +37,15 @@ void ChooseGameMenu::enterKeyAction()
 
 void ChooseGameMenu::newGameButtonAction()
 {
+	ChooseGamemodeMenu* choose_gamemode_menu;
+	choose_gamemode_menu = new ChooseGamemodeMenu(width, height, window);
 
+	while (!choose_gamemode_menu->returnButtonPressed())
+	{
+		choose_gamemode_menu->run();
+	}
+
+	delete choose_gamemode_menu;
 }
 
 void ChooseGameMenu::savedGameButtonAction()

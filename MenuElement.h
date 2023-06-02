@@ -3,17 +3,16 @@
 #include <iostream>
 #include <vector>
 
-#define BUTTONS_NUMBER 3 //number of buttons in menu
-
 
 class MenuElement
 {
 protected:
+	int buttons_number = 3; //number of buttons in menu
 	int width, height;
 	int font_size, x_pos, y_pos, y_pos_unit;
 	int selectedButtonIndex;
 
-	sf::Text buttons[BUTTONS_NUMBER];
+	std::vector <sf::Text> buttons{ buttons_number };
 	sf::RenderWindow* window;
 	sf::Font font;
 
