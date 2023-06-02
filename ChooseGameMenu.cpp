@@ -42,7 +42,7 @@ void ChooseGameMenu::newGameButtonAction()
 
 	while (!choose_gamemode_menu->returnButtonPressed())
 	{
-		choose_gamemode_menu->run();
+		choose_gamemode_menu->run();// tutaj mozna by użyć tego playerName aby otworzyć grę jako ten gracz
 	}
 
 	delete choose_gamemode_menu;
@@ -50,7 +50,7 @@ void ChooseGameMenu::newGameButtonAction()
 
 void ChooseGameMenu::savedGameButtonAction()
 {
-
+	// tutaj mozna by użyć tego playerName aby otworzyć grę jako ten gracz
 }
 
 void ChooseGameMenu::returnButtonAction()

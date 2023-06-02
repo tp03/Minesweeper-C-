@@ -15,6 +15,7 @@ protected:
 	std::vector <sf::Text> buttons{ buttons_number };
 	sf::RenderWindow* window;
 	sf::Font font;
+	std::string playerName;
 
 	void draw();
 	void setButtons();
