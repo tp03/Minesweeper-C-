@@ -1,37 +1,37 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include "MenuElement.h"
+#include "RankingHUD.h"
+#include "Reader.h"
 #include <nlohmann/json.hpp>
 #include <iostream>
 #include <fstream>
-#include <vector>
 #include <string>
+#include <vector>
 
-#define ITEMS_NUMBER 10
+#define ITEMS_NUMBER 10 //number of items displaying on ranking list
 
-class Ranking
+using json = nlohmann::json;
+
+
+class Ranking :
+	public MenuElement
 {
-	int width, height;
-
-	int cursorIndex;
-	int font_size, x_pos, y_pos, y_pos_unit;
+	int cursor_index;
 
 	bool escape_clicked, right_clicked, left_clicked;
 
-	sf::Font font;
-	sf::Text HUD_title, HUD_return, HUD_navigation, HUD_gamemode;
-	sf::Text ranking_places[ITEMS_NUMBER];
-	sf::Text ranking_nicknames[ITEMS_NUMBER];
-	sf::Text ranking_scores[ITEMS_NUMBER];
-	sf::RenderWindow* window;
-
 	std::string file_name;
+
 	std::vector <std::string> nicknames;
 	std::vector <int> scores;
 
-	void readFromFile();
-	void drawRanking();
-	void setHUD();
+	sf::Text ranking_places[ITEMS_NUMBER];
+	sf::Text ranking_nicknames[ITEMS_NUMBER];
+	sf::Text ranking_scores[ITEMS_NUMBER];
+
+	void loadPlayerList();
 	void setRankingList();
+	void draw();
 	void upKeyAction();
 	void downKeyAction();
 	void rightKeyAction();
@@ -40,11 +40,11 @@ class Ranking
 	void scroll();
 
 public:
-	Ranking(int width, int height, sf::RenderWindow* window, std::string file_name);
+	Ranking(int w, int h, sf::RenderWindow* win, std::string f_name);
 
-	bool escapeClicked();
-	bool rightClicked();
-	bool leftClicked();
+	bool escapeKeyClicked();
+	bool rightKeyClicked();
+	bool leftKeyClicked();
 
-	void run();
+	virtual void run();
 };
