@@ -15,7 +15,6 @@ protected:
 	std::vector <sf::Text> buttons{ buttons_number };
 	sf::RenderWindow* window;
 	sf::Font font;
-	static std::string playerName;
 
 	void draw();
 	void setButtons();
@@ -25,6 +24,7 @@ protected:
 	void downKeyAction();
 
 public:
+	static std::string playerName;
 	MenuElement(int width, int height, sf::RenderWindow* window);
 
 	virtual void run() = 0;
