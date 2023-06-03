@@ -39,6 +39,7 @@ void StartMenu::playButtonAction()
 {
 	ChooseGameMenu* choose_game_menu;
 	choose_game_menu = new ChooseGameMenu(width, height, window);
+	choose_game_menu->setPlayerName(playerName);
 
 	while (!choose_game_menu->returnButtonPressed())
 	{

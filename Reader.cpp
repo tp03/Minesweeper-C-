@@ -35,15 +35,15 @@ void Reader::sortLists()
 {
 	for (int i = 0; i < int(nicknames.size() - 1); ++i)
 	{
-		int max_index = i;
+		int min_index = i;
 		for (int j = i + 1; j < nicknames.size(); j++)
 		{
-			if (scores[j] > scores[max_index]) {
-				max_index = j;
+			if (scores[j] < scores[min_index]) {
+				min_index = j;
 			}
 		}
-		std::swap(nicknames[i], nicknames[max_index]);
-		std::swap(scores[i], scores[max_index]);
+		std::swap(nicknames[i], nicknames[min_index]);
+		std::swap(scores[i], scores[min_index]);
 	}
 }
 

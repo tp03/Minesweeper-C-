@@ -1,5 +1,7 @@
 #pragma once
 #include "MenuElement.h"
+#include "Player.h"
+#include "GameInterface.h"
 
 
 class ChooseGamemodeMenu :

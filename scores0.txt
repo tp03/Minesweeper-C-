@@ -1,0 +1,18 @@
+[
+    {
+        "name": "Aditechnik",
+        "score": 61
+    },
+    {
+        "name": "Aditechnik",
+        "score": 50
+    },
+    {
+        "name": "anton",
+        "score": 45
+    },
+    {
+        "name": "Mareczek",
+        "score": 44
+    },
+]

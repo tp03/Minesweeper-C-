@@ -3,7 +3,7 @@
 #include "Cell.h"
 #include "Player.h"
 #include <iostream>
-#include <nlohmann/json.hpp>
+#include "json.hpp"
 
 class Board {
 public:
@@ -23,14 +23,14 @@ public:
     void flagCell(int x, int y);
     void unflagCell(int x, int y);
 
-    void rightClicked(sf::Vector2i mousePosition);
-    void leftClicked(sf::Vector2i mousePosition);
+    void rightClicked(const sf::Vector2i& mousePosition);
+    void leftClicked(const sf::Vector2i& mousePosition, bool first_click);
 
     int getAdjacentMines(int x, int y);
     int flagsLeft();
 
-    void saveBoard(const Player& player);//to musi być przypisane do przycisku w menu
-    void loadBoard(const Player& player);//to musi być przypisane do przycisku w menu
+    void saveBoard(int time);
+    int loadBoard();
 private:
     void initializeBoard();
     void placeMines();

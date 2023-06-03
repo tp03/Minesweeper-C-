@@ -1,7 +1,8 @@
+#pragma once
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <nlohmann/json.hpp>
+#include "json.hpp"
 
 class Player {
 public:
@@ -14,6 +15,8 @@ public:
     void resetScore();
     void setScore(int amount);
     void saveScore(int difficulty);
+
+    void fixedSaveScore(int difficulty);
 
 private:
     std::string name_;

@@ -24,8 +24,9 @@ protected:
 	void downKeyAction();
 
 public:
-	static std::string playerName;
+	std::string playerName;
 	MenuElement(int width, int height, sf::RenderWindow* window);
+	void setPlayerName(std::string name);
 
 	virtual void run() = 0;
 };

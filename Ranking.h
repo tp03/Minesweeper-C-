@@ -2,7 +2,7 @@
 #include "MenuElement.h"
 #include "RankingHUD.h"
 #include "Reader.h"
-#include <nlohmann/json.hpp>
+#include "json.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -48,3 +48,4 @@ public:
 
 	virtual void run();
 };
+

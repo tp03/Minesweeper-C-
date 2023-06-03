@@ -1,5 +1,4 @@
 #include "Board.h"
-#include "Cell.h"
 #include <random>
 
 Board::Board(int width, int height, int numMines)
@@ -114,46 +113,49 @@ int Board::getAdjacentMines(int x, int y)
     return count;
 }
 
-void Board::saveBoard(const Player& player)
+void Board::saveBoard(int time)
 {
-    std::ofstream outputFile(player.getName() + ".json");
+    std::ofstream outputFile("saved_board.json");
 
     if (outputFile.is_open())
     {
         nlohmann::json boardData;
 
+
         for (int x = 0; x < getWidth(); ++x) {
             for (int y = 0; y < getHeight(); ++y) {
-                bool isCellOpen = isCellOpen(x, y);
-                bool isCellFlag = isCellFlag(x, y);
-                bool isCellMine = isCellMine(x, y);
+                bool a1 = isCellOpen(x, y);
+                bool a2 = isCellFlag(x, y);
+                bool a3 = isCellMine(x, y);
+                int adjacent_mines = getAdjacentMines(x, y);
 
                 nlohmann::json cellData;
                 cellData["x"] = x;
                 cellData["y"] = y;
-                cellData["isCellOpen"] = isCellOpen;
-                cellData["isCellFlag"] = isCellFlag;
-                cellData["isCellMine"] = isCellMine;
+                cellData["isCellOpen"] = a1;
+                cellData["isCellFlag"] = a2;
+                cellData["isCellMine"] = a3;
+                cellData["adjMines"] = adjacent_mines;
+                cellData["time"] = time;
 
                 boardData.push_back(cellData);
             }
         }
-
-        boardData["playerScore"] = player.getScore();
-
         outputFile << boardData.dump(4);
         outputFile.close();
-        std::cout << "Board saved to " << player.getName() + ".json" << std::endl;
+        std::cout << "Board saved to " << "saved_board.json" << std::endl;
     }
     else
     {
-        std::cerr << "Unable to open file: " << player.getName() + ".json" << std::endl;
+        std::cerr << "Unable to open file: " << "saved_board.json" << std::endl;
     }
 }
 
-void Board::loadBoard(const Player& player)
+int Board::loadBoard()
 {
-    std::ifstream inputFile(player.getName() + ".json");
+    std::ifstream inputFile("saved_board.json");
+
+    int stop_time;
 
     if (inputFile.is_open())
     {
@@ -164,9 +166,11 @@ void Board::loadBoard(const Player& player)
         {
             int x = cellData["x"];
             int y = cellData["y"];
+            stop_time = cellData["time"];
             bool isCellOpen = cellData["isCellOpen"];
             bool isCellFlag = cellData["isCellFlag"];
             bool isCellMine = cellData["isCellMine"];
+            int adj_mines = cellData["adjMines"];
 
             cells[x][y]->setMine(false);
 
@@ -174,28 +178,48 @@ void Board::loadBoard(const Player& player)
             {
                 cells[x][y]->setOpen(true);
             }
-            else if (isCellFlag)
+            if (isCellFlag)
             {
                 cells[x][y]->setFlag(true);
             }
-            else if (isCellMine)
+            if (isCellMine)
             {
                 cells[x][y]->setMine(true);
             }
+
+            cells[x][y]->setAdjacentMines(adj_mines);
         }
 
-        calculateAdjacentMines();
 
-        int playerScore = boardData["playerScore"];
-        player.setScore(playerScore);
+        for (int x2 = 0; x2 < width; x2++)
+        {
+            for (int y2 = 0; y2 < height; y2++)
+            {
+
+                if (isCellFlag(x2, y2))
+                {
+                    bool mine = isCellMine(x2, y2);
+                    int aj_mines = getAdjacentMines(x2, y2);
+                    cells[x2][y2] = new Flag(x2, y2, mine, aj_mines);
+                }
+                if (isCellOpen(x2, y2))
+                {
+
+                    int aj_mines = getAdjacentMines(x2, y2);
+                    cells[x2][y2] = new Numbered(x2, y2, aj_mines);
+                }
+            }
+        }
+
 
         inputFile.close();
-        std::cout << "Board loaded from " << player.getName() + ".json" << std::endl;
+        std::cout << "Board loaded from " << "saved_board.json" << std::endl;
     }
     else
     {
-        std::cerr << "Unable to open file: " << player.getName() + ".json" << std::endl;
+        std::cerr << "Unable to open file: " << "saved_board.json" << std::endl;
     }
+    return stop_time;
 }
 
 void Board::initializeBoard()
@@ -273,7 +297,7 @@ void Board::calculateAdjacentMines()
     }
 }
 
-void Board::rightClicked(sf::Vector2i mouse_position)
+void Board::rightClicked(const sf::Vector2i& mouse_position)
 {
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++)
@@ -298,7 +322,7 @@ void Board::rightClicked(sf::Vector2i mouse_position)
     }
 }
 
-void Board::leftClicked(sf::Vector2i mouse_position)
+void Board::leftClicked(const sf::Vector2i& mouse_position, bool first_click)
 {
     for (int x = 0; x < width; x++) {
         for (int y = 0; y < height; y++)
@@ -311,17 +335,78 @@ void Board::leftClicked(sf::Vector2i mouse_position)
 
                     if (isCellMine(x, y))
                     {
-                        for (int x = 0; x < width; x++)
+
+                        if (first_click)
                         {
-                            for (int y = 0; y < height; y++)
+                            if (!isCellMine(0, 0))
                             {
-                                if (isCellMine(x, y))
+                                cells[0][0]->setMine(true);
+                                cells[x][y]->setMine(false);
+                                calculateAdjacentMines();
+                                cells[x][y]->setSprite();
+                            }
+                            else if (!isCellMine(width - 1, 0))
+                            {
+                                cells[width - 1][0]->setMine(true);
+                                cells[x][y]->setMine(false);
+                                calculateAdjacentMines();
+                                cells[x][y]->setSprite();
+                            }
+                            else if (!isCellMine(0, height - 1))
+                            {
+                                cells[0][height - 1]->setMine(true);
+                                cells[x][y]->setMine(false);
+                                calculateAdjacentMines();
+                                cells[x][y]->setSprite();
+                            }
+                            else if (!isCellMine(width - 1, height - 1))
+                            {
+                                cells[width - 1][height - 1]->setMine(true);
+                                cells[x][y]->setMine(false);
+                                calculateAdjacentMines();
+                                cells[x][y]->setSprite();
+                            }
+                            else
+                            {
+                                for (int x_2 = 0; x_2 < width; x_2++)
                                 {
-                                    cells[x][y] = new Mine(x, y);
+                                    for (int y_2 = 0; y_2 < height; y_2++)
+                                    {
+                                        if (!isCellMine(x_2, y_2))
+                                        {
+                                            cells[x_2][y_2]->setMine(true);
+                                            cells[x][y]->setMine(false);
+                                        }
+
+                                    }
                                 }
-                                else
+                            }
+                            openCell(x, y);
+                            for (int x = 0; x < width; x++)
+                            {
+                                for (int y = 0; y < height; y++)
                                 {
-                                    cells[x][y] = new Numbered(x, y, cells[x][y]->getAdjacentMines());
+                                    if (isCellOpen(x, y))
+                                    {
+                                        cells[x][y] = new Numbered(x, y, cells[x][y]->getAdjacentMines());
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int x = 0; x < width; x++)
+                            {
+                                for (int y = 0; y < height; y++)
+                                {
+                                    if (isCellMine(x, y))
+                                    {
+                                        cells[x][y] = new Mine(x, y);
+                                    }
+                                    else
+                                    {
+                                        cells[x][y] = new Numbered(x, y, cells[x][y]->getAdjacentMines());
+                                    }
                                 }
                             }
                         }
@@ -351,3 +436,4 @@ void Board::leftClicked(sf::Vector2i mouse_position)
 
 
     }
+}

@@ -47,18 +47,24 @@ void ChooseGamemodeMenu::enterKeyAction()
 
 void ChooseGamemodeMenu::easyModeButtonAction()
 {
-	std::cout << "easy\n";
+	Player p(playerName);
+	GameInterface* game_ptr = new EasyGame;
+	game_ptr->playGame(p);
 }
 
 void ChooseGamemodeMenu::normalModeButtonAction()
 {
-	std::cout << "normal\n";
+	Player p(playerName);
+	GameInterface* game_ptr = new MediumGame;
+	game_ptr->playGame(p);
 
 }
 
 void ChooseGamemodeMenu::hardModeButtonAction()
 {
-	std::cout << "hard\n";
+	Player p(playerName);
+	GameInterface* game_ptr = new HardGame;
+	game_ptr->playGame(p);
 
 }
 

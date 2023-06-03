@@ -4,10 +4,15 @@
 MenuElement::MenuElement(int w, int h, sf::RenderWindow* win)
 	:width(w), height(h), window(win)
 {
-	if (!font.loadFromFile("Modern.ttf"))
+	if (!font.loadFromFile("textures/Modern.ttf"))
 	{
 		std::cerr << "Failed to load font.";
 	}
+}
+
+void MenuElement::setPlayerName(std::string name)
+{
+	playerName = name;
 }
 
 void MenuElement::setButtons()

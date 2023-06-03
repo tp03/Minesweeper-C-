@@ -1,5 +1,4 @@
 #include "Cell.h"
-#include <..\SFML\Graphics.hpp>
 
 
 bool Cell::isMine() const
@@ -57,7 +56,7 @@ void Mine::setSprite()
 {
 
 	mine_texture = new sf::Texture;
-	mine_texture->loadFromFile("mine.png");
+	mine_texture->loadFromFile("textures/mine.png");
 	mine_sprite.setTexture(*mine_texture);
 	int x = 100 * getX();
 	int y = 100 * getY();
@@ -75,7 +74,7 @@ void Flag::setSprite()
 {
 
 	flag_texture = new sf::Texture;
-	flag_texture->loadFromFile("flag.png");
+	flag_texture->loadFromFile("textures/flag.png");
 	flag_sprite.setTexture(*flag_texture);
 	int x = 100 * getX();
 	int y = 100 * getY();
@@ -94,46 +93,46 @@ void Numbered::setSprite()
 	numbered_texture = new sf::Texture;
 	if (getAdjacentMines() == 0)
 	{
-		numbered_texture->loadFromFile("0.png");
+		numbered_texture->loadFromFile("textures/0.png");
 	}
 
 	else if (getAdjacentMines() == 1)
 	{
-		numbered_texture->loadFromFile("1.png");
+		numbered_texture->loadFromFile("textures/1.png");
 	}
 
 	else if (getAdjacentMines() == 2)
 	{
-		numbered_texture->loadFromFile("2.png");
+		numbered_texture->loadFromFile("textures/2.png");
 	}
 
 	else if (getAdjacentMines() == 3)
 	{
-		numbered_texture->loadFromFile("3.png");
+		numbered_texture->loadFromFile("textures/3.png");
 	}
 
 	else if (getAdjacentMines() == 4)
 	{
-		numbered_texture->loadFromFile("4.png");
+		numbered_texture->loadFromFile("textures/4.png");
 	}
 
 	else if (getAdjacentMines() == 5)
 	{
-		numbered_texture->loadFromFile("5.png");
+		numbered_texture->loadFromFile("textures/5.png");
 	}
 
 	else if (getAdjacentMines() == 6)
 	{
-		numbered_texture->loadFromFile("6.png");
+		numbered_texture->loadFromFile("textures/6.png");
 	}
 
 	else if (getAdjacentMines() == 7)
 	{
-		numbered_texture->loadFromFile("7.png");
+		numbered_texture->loadFromFile("textures/7.png");
 	}
 	else
 	{
-		numbered_texture->loadFromFile("8.png");
+		numbered_texture->loadFromFile("textures/8.png");
 	}
 	numbered_sprite.setTexture(*numbered_texture);
 	int x = 100 * getX();
@@ -152,7 +151,7 @@ void Closed::setSprite()
 {
 
 	closed_texture = new sf::Texture;
-	closed_texture->loadFromFile("closed.png");
+	closed_texture->loadFromFile("textures/closed.png");
 	closed_sprite.setTexture(*closed_texture);
 	int x = 100 * getX();
 	int y = 100 * getY();
@@ -164,7 +163,7 @@ sf::Sprite Closed::reveal()
 	return closed_sprite;
 }
 
-bool Cell::isSpriteClicked(sf::Vector2i mousePosition)
+bool Cell::isSpriteClicked(const sf::Vector2i& mousePosition)
 {
 
 	sf::Sprite spr = reveal();

@@ -30,10 +30,11 @@ public:
 	void setMine(bool boolean);
 	void setFlag(bool boolean);
 	void setOpen(bool boolean);
-	bool isSpriteClicked(sf::Vector2i mousePosition);
 	void setAdjacentMines(int mine_count);
+	bool isSpriteClicked(const sf::Vector2i& mousePosition);
 	virtual void setSprite() = 0;
 	virtual sf::Sprite reveal() = 0;
+
 
 };
 
@@ -87,9 +88,8 @@ public:
 		setAdjacentMines(adjacent_mines);
 		setMine(mine);
 		setFlag(true);
-		setOpen(true);
+		setOpen(false);
 		setSprite();
-
 	}
 
 	void setSprite() override;
@@ -121,7 +121,6 @@ public:
 		setFlag(false);
 		setOpen(true);
 		setSprite();
-
 	}
 
 	void setSprite() override;

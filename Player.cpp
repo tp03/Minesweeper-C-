@@ -1,3 +1,5 @@
+#include "Player.h"
+
 Player::Player() : score_(0) {}
 
 Player::Player(const std::string& name) : name_(name), score_(0) {}
@@ -35,7 +37,8 @@ void Player::saveScore(int difficulty) {
         outputFile << playerData.dump(4);
         outputFile.close();
         std::cout << "Player result saved to " << fileName << std::endl;
-    } else {
+    }
+    else {
         std::cerr << "Unable to open file: " << fileName << std::endl;
     }
 }
@@ -69,7 +72,7 @@ void Player::fixedSaveScore(int difficulty) {
     json allPlayersData;
 
     if (outputFile.is_open()) {
-        player_data.push_back({getName(), getScore()});
+        player_data.push_back({ getName(), getScore() });
 
         json playerData;
         for (int i = 0; i < player_data.size(); i++)

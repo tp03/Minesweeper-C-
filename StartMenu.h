@@ -1,6 +1,6 @@
 #pragma once
 #include "MenuElement.h"
-#include "MenuChooseGame.h"
+#include "ChooseGameMenu.h"
 #include "RankingHUD.h"
 #include "Ranking.h"
 
