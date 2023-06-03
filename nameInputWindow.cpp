@@ -18,10 +18,8 @@ nameInputWindow::nameInputWindow(int w, int h, sf::RenderWindow* win)
 void nameInputWindow::run()
 {
     sf::Event event;
-    StartMenu* start_menu;
-    start_menu = new StartMenu(width, height, window);
-
     sf::Time elapsed = cursorClock.getElapsedTime();
+
     if (elapsed.asSeconds() >= 0.5f) {
         showCursor = !showCursor;
         cursorClock.restart();
@@ -62,6 +60,8 @@ void nameInputWindow::run()
         {
             if (event.key.code == sf::Keyboard::Enter)
             {
+                StartMenu* start_menu;
+                start_menu = new StartMenu(width, height, window);
                 while (window->isOpen())
                 {
                     start_menu->run();
