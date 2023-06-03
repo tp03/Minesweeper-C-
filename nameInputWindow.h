@@ -10,4 +10,6 @@ public:
 	nameInputWindow(int width, int height, sf::RenderWindow* window);
 
 	virtual void run();
+	sf::Clock cursorClock;
+	bool showCursor = true;
 };
