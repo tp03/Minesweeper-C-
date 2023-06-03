@@ -18,8 +18,10 @@ nameInputWindow::nameInputWindow(int w, int h, sf::RenderWindow* win)
 void nameInputWindow::run()
 {
     sf::Event event;
-    sf::Time elapsed = cursorClock.getElapsedTime();
+    StartMenu* start_menu;
+    start_menu = new StartMenu(width, height, window);
 
+    sf::Time elapsed = cursorClock.getElapsedTime();
     if (elapsed.asSeconds() >= 0.5f) {
         showCursor = !showCursor;
         cursorClock.restart();
