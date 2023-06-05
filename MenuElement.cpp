@@ -88,3 +88,43 @@ void MenuElement::downKeyAction()
 		highlightButton();
 	}
 }
+
+int MenuElement::getWidth()
+{
+	return width;
+}
+
+int MenuElement::getHeight()
+{
+	return height;
+}
+
+int MenuElement::getFontSize()
+{
+	return font_size;
+}
+
+int MenuElement::getXPos()
+{
+	return x_pos;
+}
+
+int MenuElement::getYPos()
+{
+	return y_pos;
+}
+
+int MenuElement::getYPosUnit()
+{
+	return y_pos_unit;
+}
+
+int MenuElement::getSelectedButtonIndex()
+{
+	return selectedButtonIndex;
+}
+
+int MenuElement::getButtonsNumber()
+{
+	return buttons_number;
+}
