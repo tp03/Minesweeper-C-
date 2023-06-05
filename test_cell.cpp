@@ -97,7 +97,7 @@ TEST(Cell, Numbered3) {
 }
 
 TEST(Cell, AdjacentMines) {
-	Cell obj(1, 1);
+	Numbered obj(1, 1, 0);
 	obj.setAdjacentMines(4);
 	EXPECT_EQ(4, obj.getAdjacentMines());
 

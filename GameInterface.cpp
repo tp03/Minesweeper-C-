@@ -258,7 +258,7 @@ void GameInterface::showBoard(Board& board, int added_time = 0, bool game_loaded
 			{
 				if (exitButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y) && !first_click)
 				{
-					int t = time.asSeconds();
+					int t = time.asSeconds() + added_time;
 					board.saveBoard(t);
 					window.close();
 				}
