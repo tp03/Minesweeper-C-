@@ -89,6 +89,10 @@ void ChooseGameMenu::run()
 				break;
 			}
 		}
+		else if (event.type == sf::Event::Closed)
+		{
+			window->close();
+		}
 	}
 
 	draw();

@@ -13,13 +13,12 @@ nameInputWindow::nameInputWindow(int w, int h, sf::RenderWindow* win)
     buttons[0].setString("Input name:");
     buttons[1].setString(" ");
 
+    start_menu = new StartMenu(width, height, window);
 }
 
 void nameInputWindow::run()
 {
     sf::Event event;
-    StartMenu* start_menu;
-    start_menu = new StartMenu(width, height, window);
 
     sf::Time elapsed = cursorClock.getElapsedTime();
     if (elapsed.asSeconds() >= 0.5f) {
@@ -70,6 +69,10 @@ void nameInputWindow::run()
                     start_menu->run();
                 }
             }
+        }
+        if (event.type == sf::Event::Closed)
+        {
+            window->close();
         }
     }
     draw();

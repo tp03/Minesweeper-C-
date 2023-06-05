@@ -6,6 +6,8 @@
 class nameInputWindow :
 	public MenuElement
 {
+	StartMenu* start_menu;
+
 public:
 	nameInputWindow(int width, int height, sf::RenderWindow* window);
 
