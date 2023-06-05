@@ -20,7 +20,7 @@ Antoni Kowalski - responsble for Class Grid
 
 ## Usage
 Pierwsze menu wygląda następująco:
-![Imie gracza](images/image1.png)
+![Imie gracza](Images/image1.png)
 
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
