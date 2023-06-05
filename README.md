@@ -19,7 +19,8 @@ Igor Płoszaj - responsble for Class Game
 Antoni Kowalski - responsble for Class Grid
 
 ## Usage
-Opisane zostanie później
+Pierwsze menu wygląda następująco:
+![Imie gracza](images/Zrzut_ekranu_2023-06-05_142655.png)
 
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
