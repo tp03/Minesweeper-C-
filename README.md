@@ -1,7 +1,7 @@
-# PROIekt
+# Minesweeper C++
 
 ## Name
-Saper
+Minesweeper
 
 ## Description
 Saper to logiczna gra komputerowa, która wymaga umiejętności dedukcyjnych oraz spostrzegawczości. Gracz musi odkryć pola na planszy, unikając min, które są ukryte wśród nich. Każde odkrycie pola dostarcza informacji na temat liczby min znajdujących się w jego sąsiedztwie, dzięki czemu gracz może wykonać dedukcje i odkryć bezpieczne pola. Gra saper wymaga strategii oraz podejmowania ryzykownych decyzji, a jej dynamiczny charakter i losowe rozmieszczenie min sprawiają, że każda gra jest unikalnym wyzwaniem.
@@ -15,7 +15,7 @@ Jeśli chcesz zagrać, musisz:
 -> skonfigurować bibliotekę SFML
 
 ## Authors and acknowledgment
-Tomasz Zalewski, Igor Płoszaj, Antoni Kowalski grupa 102 poniedziałek 16:15
+Tomasz Zalewski, Igor Płoszaj, Antoni Kowalski - Warsaw University of Technology Faculty of Electronics and Information Technology
 
 ## Division of Work
 Tomasz Zalewski - responsble for Class Cell and Class GameInterface
